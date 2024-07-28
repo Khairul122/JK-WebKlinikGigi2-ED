@@ -35,7 +35,6 @@
                       <div class="col-md-8">
 
                         <input type="text" placeholder="Nomor Hp" class="form-control" name="telephone">
-
                       </div>
                     </div>
                   </div>
@@ -59,7 +58,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="col-md-8 offset-md-4">
                     <button type="submit" class="btn btn-primary">Save</button>
                   </div>

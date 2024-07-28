@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 19, 2024 at 08:20 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Host: localhost:3306
+-- Generation Time: Jul 28, 2024 at 10:17 AM
+-- Server version: 8.0.30
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,18 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `dokter` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nama_dokter` varchar(128) NOT NULL,
-  `alamat` text DEFAULT NULL,
+  `alamat` text,
   `telephone` varchar(16) NOT NULL,
   `spesialis` text NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dokter`
+--
+
+INSERT INTO `dokter` (`id`, `nama_dokter`, `alamat`, `telephone`, `spesialis`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(5, 'Budi', 'Padang', '080808080808', 'Gigi', '2024-07-28 09:34:34', NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -48,7 +55,7 @@ CREATE TABLE `dokter` (
 --
 
 CREATE TABLE `group_id` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(128) NOT NULL,
   `definition` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -60,14 +67,14 @@ CREATE TABLE `group_id` (
 --
 
 CREATE TABLE `obat` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nama_obat` varchar(128) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -93,19 +100,26 @@ INSERT INTO `obat` (`id`, `nama_obat`, `created_at`, `updated_at`, `deleted_at`,
 --
 
 CREATE TABLE `pasien` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nomor_identitas` varchar(30) DEFAULT NULL,
   `nama_pasien` varchar(128) NOT NULL,
   `jenis_kelamin` char(1) DEFAULT NULL,
   `alamat` text NOT NULL,
   `telephone` varchar(16) DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pasien`
+--
+
+INSERT INTO `pasien` (`id`, `nomor_identitas`, `nama_pasien`, `jenis_kelamin`, `alamat`, `telephone`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(4, 'BK 1010', 'Budi', 'l', 'Padang', '082165443677', '2024-07-28 10:08:01', NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,20 +128,27 @@ CREATE TABLE `pasien` (
 --
 
 CREATE TABLE `rekam_medis` (
-  `id` int(11) NOT NULL,
-  `pasien_id` int(11) NOT NULL,
-  `dokter_id` int(11) NOT NULL,
-  `ruang_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `pasien_id` int NOT NULL,
+  `dokter_id` int NOT NULL,
+  `ruang_id` int NOT NULL,
   `keluhan` text NOT NULL,
   `diagnosa` text NOT NULL,
   `tanggal` date NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) DEFAULT NULL
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rekam_medis`
+--
+
+INSERT INTO `rekam_medis` (`id`, `pasien_id`, `dokter_id`, `ruang_id`, `keluhan`, `diagnosa`, `tanggal`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(16, 4, 5, 6, 'Gigi', 'Sakit gigi', '2024-07-28', '2024-07-28 10:16:41', NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -136,10 +157,17 @@ CREATE TABLE `rekam_medis` (
 --
 
 CREATE TABLE `rm_obat` (
-  `id` int(11) NOT NULL,
-  `obat_id` int(11) NOT NULL,
-  `rm_id` int(11) NOT NULL
+  `id` int NOT NULL,
+  `obat_id` int NOT NULL,
+  `rm_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rm_obat`
+--
+
+INSERT INTO `rm_obat` (`id`, `obat_id`, `rm_id`) VALUES
+(8, 5, 16);
 
 -- --------------------------------------------------------
 
@@ -148,16 +176,23 @@ CREATE TABLE `rm_obat` (
 --
 
 CREATE TABLE `ruang` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `nama_ruang` varchar(128) NOT NULL,
-  `keterangan` text DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `keterangan` text,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `deleted_by` int(11) NOT NULL
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `deleted_by` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ruang`
+--
+
+INSERT INTO `ruang` (`id`, `nama_ruang`, `keterangan`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
+(6, 'Melati 03', 'Ruang OP', '2024-07-28 10:10:55', NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -166,12 +201,12 @@ CREATE TABLE `ruang` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `group_id` int NOT NULL,
   `username` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
   `last_login` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -248,49 +283,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `group_id`
 --
 ALTER TABLE `group_id`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `rm_obat`
 --
 ALTER TABLE `rm_obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `ruang`
 --
 ALTER TABLE `ruang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
