@@ -109,7 +109,7 @@ foreach ($rekam_medis as &$rm) {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<!-- Laporan Harian -->
+// Laporan Harian
 <script>
   document.getElementById('printBtn').addEventListener('click', function() {
     const {
@@ -119,26 +119,20 @@ foreach ($rekam_medis as &$rm) {
     doc.setFont("helvetica");
     doc.setFontSize(12);
 
-    // Fungsi untuk menghindari nilai null atau undefined
     function safeText(value) {
       return value !== null && value !== undefined ? String(value) : '';
     }
 
-    // Ambil nilai tanggal dari form
     const tanggalAwal = new Date(document.getElementById('tanggal_awal').value);
     const tanggalAkhir = new Date(document.getElementById('tanggal_akhir').value);
     const namaPimpinan = document.getElementById('namaPimpinan').value || "Pimpinan";
 
-    // Ambil data rekam medis dari PHP
     const data = <?php echo json_encode($rekam_medis); ?>;
-
-    // Inisialisasi total pembayaran
     let totalPembayaran = 0;
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
 
-    // Header
     doc.text("RUMAH KLINIK GIGI", pageWidth / 2, 10, null, null, "center");
     doc.setFontSize(10);
     doc.text("Jl. Perwira Ujung Belakang No.298, Belakang Balok, Kec. Aur Birugo Tigo Baleh, Kota Bukittinggi", pageWidth / 2, 17, null, null, "center");
@@ -154,7 +148,7 @@ foreach ($rekam_medis as &$rm) {
     }
 
     let startY = 55;
-    const headers = ["No", "Tanggal", "Pasien", "Keluhan", "Dokter", "Diagnosa", "Obat", "Ruang", "Pembayaran"];
+    const headers = ["No", "Tanggal", "Pasien", "Keluhan", "Dokter", "Diagnosa", "Layanan", "Ruang", "Pembayaran"];
     const headerWidth = [10, 30, 30, 30, 30, 40, 50, 30, 35];
     const tableWidth = headerWidth.reduce((a, b) => a + b, 0);
     const startX = (pageWidth - tableWidth) / 2;
@@ -169,7 +163,8 @@ foreach ($rekam_medis as &$rm) {
 
     startY += 10;
 
-    data.forEach((item, i) => {
+    let nomorUrut = 1; // Inisialisasi nomor urut
+    data.forEach((item) => {
       const itemDate = new Date(item.tanggal);
 
       if (
@@ -178,7 +173,7 @@ foreach ($rekam_medis as &$rm) {
       ) {
         let x = startX;
         doc.rect(x, startY, headerWidth[0], 10);
-        doc.text(safeText(i + 1), x + paddingX, startY + 7); // No
+        doc.text(safeText(nomorUrut++), x + paddingX, startY + 7); // No
         x += headerWidth[0];
 
         doc.rect(x, startY, headerWidth[1], 10);
@@ -247,9 +242,9 @@ foreach ($rekam_medis as &$rm) {
   });
 </script>
 
+
 <!-- Laporan Bulanan -->
 <script>
-  // JavaScript untuk mencetak laporan bulanan
   document.getElementById('printMonthlyBtn').addEventListener('click', function() {
     const {
       jsPDF
@@ -276,7 +271,6 @@ foreach ($rekam_medis as &$rm) {
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
 
-    // Ambil nama pimpinan dari input form bulanan
     const namaPimpinan = document.getElementById('namaPimpinanBulanan').value || "Pimpinan";
 
     doc.text("RUMAH KLINIK GIGI", pageWidth / 2, 10, null, null, "center");
@@ -288,7 +282,7 @@ foreach ($rekam_medis as &$rm) {
     doc.text(`Laporan Rekam Medis Bulan ${month}/${year}`, pageWidth / 2, 35, null, null, "center");
 
     let startY = 55;
-    const headers = ["No", "Tanggal", "Pasien", "Keluhan", "Dokter", "Diagnosa", "Obat", "Ruang", "Pembayaran"];
+    const headers = ["No", "Tanggal", "Pasien", "Keluhan", "Dokter", "Diagnosa", "Layanan", "Ruang", "Pembayaran"];
     const headerWidth = [10, 30, 30, 30, 30, 40, 50, 30, 35];
     const tableWidth = headerWidth.reduce((a, b) => a + b, 0);
     const startX = (pageWidth - tableWidth) / 2;
@@ -303,7 +297,8 @@ foreach ($rekam_medis as &$rm) {
 
     startY += 10;
 
-    data.forEach((item, i) => {
+    let nomorUrut = 1; // Inisialisasi nomor urut
+    data.forEach((item) => {
       const itemDate = new Date(item.tanggal);
       const itemMonth = (itemDate.getMonth() + 1).toString().padStart(2, '0');
       const itemYear = itemDate.getFullYear();
@@ -311,7 +306,7 @@ foreach ($rekam_medis as &$rm) {
       if (itemMonth === month && itemYear.toString() === year) {
         let x = startX;
         doc.rect(x, startY, headerWidth[0], 10);
-        doc.text(safeText(i + 1), x + paddingX, startY + 7);
+        doc.text(safeText(nomorUrut++), x + paddingX, startY + 7); // No
         x += headerWidth[0];
 
         doc.rect(x, startY, headerWidth[1], 10);
@@ -436,6 +431,7 @@ document.getElementById('printAnnualBtn').addEventListener('click', function () 
     ];
 
     // Menyiapkan data per bulan yang ada dalam database
+    let nomorUrut = 1; // Inisialisasi nomor urut
     months.forEach((month, index) => {
         const monthlyData = data.filter(item => {
             const itemDate = new Date(item.tanggal);
@@ -454,7 +450,7 @@ document.getElementById('printAnnualBtn').addEventListener('click', function () 
             // Baris data
             x = startX;
             doc.rect(x, startY, headerWidth[0], 10);
-            doc.text(safeText(index + 1), x + paddingX, startY + 7); // No
+            doc.text(safeText(nomorUrut++), x + paddingX, startY + 7); // No
             x += headerWidth[0];
 
             doc.rect(x, startY, headerWidth[1], 10);
