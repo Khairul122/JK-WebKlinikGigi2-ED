@@ -435,42 +435,42 @@ document.getElementById('printAnnualBtn').addEventListener('click', function () 
         "Juli", "Agustus", "September", "Oktober", "November", "Desember"
     ];
 
-    // Menyiapkan data per bulan
+    // Menyiapkan data per bulan yang ada dalam database
     months.forEach((month, index) => {
-        const count = data.filter(item => {
+        const monthlyData = data.filter(item => {
             const itemDate = new Date(item.tanggal);
             return itemDate.getFullYear() == tahun && itemDate.getMonth() == index;
-        }).length;
+        });
 
-        const pembayaranBulan = data.reduce((total, item) => {
-            const itemDate = new Date(item.tanggal);
-            if (itemDate.getFullYear() == tahun && itemDate.getMonth() == index) {
+        if (monthlyData.length > 0) {
+            const count = monthlyData.length;
+
+            const pembayaranBulan = monthlyData.reduce((total, item) => {
                 return total + parseInt(item.pembayaran || 0);
-            }
-            return total;
-        }, 0);
+            }, 0);
 
-        totalPembayaran += pembayaranBulan;
+            totalPembayaran += pembayaranBulan;
 
-        // Baris data
-        x = startX;
-        doc.rect(x, startY, headerWidth[0], 10);
-        doc.text(safeText(index + 1), x + paddingX, startY + 7); // No
-        x += headerWidth[0];
+            // Baris data
+            x = startX;
+            doc.rect(x, startY, headerWidth[0], 10);
+            doc.text(safeText(index + 1), x + paddingX, startY + 7); // No
+            x += headerWidth[0];
 
-        doc.rect(x, startY, headerWidth[1], 10);
-        doc.text(safeText(month), x + paddingX, startY + 7); // Bulan
-        x += headerWidth[1];
+            doc.rect(x, startY, headerWidth[1], 10);
+            doc.text(safeText(month), x + paddingX, startY + 7); // Bulan
+            x += headerWidth[1];
 
-        doc.rect(x, startY, headerWidth[2], 10);
-        doc.text(safeText(count), x + paddingX, startY + 7); // Jumlah
-        x += headerWidth[2];
+            doc.rect(x, startY, headerWidth[2], 10);
+            doc.text(safeText(count), x + paddingX, startY + 7); // Jumlah
+            x += headerWidth[2];
 
-        doc.rect(x, startY, headerWidth[3], 10);
-        doc.text("Rp " + pembayaranBulan.toLocaleString('id-ID'), x + paddingX, startY + 7); // Pembayaran
-        x += headerWidth[3];
+            doc.rect(x, startY, headerWidth[3], 10);
+            doc.text("Rp " + pembayaranBulan.toLocaleString('id-ID'), x + paddingX, startY + 7); // Pembayaran
+            x += headerWidth[3];
 
-        startY += 10;
+            startY += 10;
+        }
     });
 
     // Baris Total Pembayaran
@@ -495,5 +495,4 @@ document.getElementById('printAnnualBtn').addEventListener('click', function () 
     // Open the generated PDF in a new window
     window.open(doc.output('bloburl'));
 });
-
 </script>
