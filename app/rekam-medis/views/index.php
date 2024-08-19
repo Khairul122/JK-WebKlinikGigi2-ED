@@ -94,9 +94,7 @@ $total_pembayaran = 0;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   document.getElementById('printBtn').addEventListener('click', function() {
-    const {
-      jsPDF
-    } = window.jspdf;
+    const { jsPDF } = window.jspdf;
     const doc = new jsPDF('landscape');
     doc.setFont("helvetica");
     doc.setFontSize(12);
@@ -145,7 +143,7 @@ $total_pembayaran = 0;
     for (let i = 0; i < rows.length; i++) {
       const cells = rows[i].getElementsByTagName('td');
       x = startX;
-      for (let j = 0; j < headerWidth.length; j++) { // Loop through all cells including the new 'pembayaran' cell
+      for (let j = 0; j < headerWidth.length; j++) {
         doc.rect(x, y, headerWidth[j], 10);
         doc.text(cells[j].innerText || '', x + 2, y + 7);
         x += headerWidth[j];
@@ -162,7 +160,7 @@ $total_pembayaran = 0;
 
     // Kolom terakhir untuk total pembayaran
     doc.rect(x, y, headerWidth[8], 10);
-    doc.text("Rp " + <?= number_format($total_pembayaran, 0, ',', '.'); ?>, x + 2, y + 7);
+    doc.text("Rp " + <?= json_encode(number_format($total_pembayaran, 0, ',', '.')); ?>, x + 2, y + 7);
 
     // Footer
     y += 20;
@@ -172,8 +170,8 @@ $total_pembayaran = 0;
       year: 'numeric'
     });
     doc.text("Bukittinggi, " + tanggal, 230, y);
-    y += 10;
-    doc.text(namaPimpinan, 230, y);
+    y += 7;
+    doc.text("Pimpinan", 230, y);
     y += 20;
     doc.text(namaPimpinan, 230, y);
 
