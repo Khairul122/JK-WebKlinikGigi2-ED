@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 15, 2024 at 01:19 AM
+-- Generation Time: Aug 19, 2024 at 09:38 AM
 -- Server version: 8.0.30
 -- PHP Version: 7.4.3
 
@@ -68,7 +68,7 @@ CREATE TABLE `group_id` (
 
 CREATE TABLE `obat` (
   `id` int NOT NULL,
-  `nama_obat` varchar(128) NOT NULL,
+  `nama_obat` varchar(128) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
@@ -149,8 +149,9 @@ CREATE TABLE `rekam_medis` (
 --
 
 INSERT INTO `rekam_medis` (`id`, `pasien_id`, `dokter_id`, `ruang_id`, `keluhan`, `diagnosa`, `tanggal`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`, `pembayaran`) VALUES
-(16, 4, 5, 6, 'Gigi', 'Sakit gigi', '2024-08-14', '2024-07-28 10:16:41', NULL, NULL, 1, NULL, NULL, 0),
-(17, 4, 5, 6, 'TES', 'TES', '2024-08-14', '2024-08-05 18:01:47', NULL, NULL, 1, NULL, NULL, 10);
+(17, 4, 5, 6, 'TES', 'TES', '2024-07-14', '2024-08-05 18:01:47', NULL, NULL, 1, NULL, NULL, 400),
+(18, 4, 5, 6, 'Budi', 'Sakit Gigi', '2024-08-15', '2024-08-15 14:18:26', NULL, NULL, 1, NULL, NULL, 100),
+(19, 4, 5, 6, 'KISTA', 'Sakit Paru Paru', '2024-08-15', '2024-08-15 14:19:20', NULL, NULL, 1, NULL, NULL, 200);
 
 -- --------------------------------------------------------
 
@@ -169,8 +170,9 @@ CREATE TABLE `rm_obat` (
 --
 
 INSERT INTO `rm_obat` (`id`, `obat_id`, `rm_id`) VALUES
-(8, 5, 16),
-(9, 5, 17);
+(9, 5, 17),
+(10, 5, 18),
+(11, 5, 19);
 
 -- --------------------------------------------------------
 
@@ -312,13 +314,13 @@ ALTER TABLE `pasien`
 -- AUTO_INCREMENT for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `rm_obat`
 --
 ALTER TABLE `rm_obat`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ruang`
