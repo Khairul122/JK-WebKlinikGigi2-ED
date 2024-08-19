@@ -65,6 +65,9 @@ if (isset($_GET['page'])) {
 		case 'lap-rekam-medis':
 			require_once 'app/laporan/views/rekam-medis.php';
 			break;
+		case 'laporan-pemilik':
+			require_once 'app/laporan-pemilik/views/index.php';
+			break;
 	}
 } else {
 	require_once 'app/dashboard/views/index.php';

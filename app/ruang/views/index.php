@@ -12,10 +12,11 @@ $no = 1;
       <div class="card">
         <div class="card-header d-flex justify-content-between">
           <h4 class="card-title">Ruang</h4>
-          <div>
+          <div class="d-flex align-items-center">
             <a href="?page=tambah-ruang" class="btn btn-primary round waves-effect waves-light">
               Tambah Ruang
             </a>
+            <input type="text" id="namaPimpinan" placeholder="Nama Pimpinan" class="form-control ml-2" style="width: 200px;" />
             <button id="printBtn" class="btn btn-secondary round waves-effect waves-light ml-2">
               Cetak
             </button>
@@ -64,6 +65,9 @@ $no = 1;
     doc.setFont("helvetica");
     doc.setFontSize(12);
 
+    // Ambil nama pimpinan dari input
+    const namaPimpinan = document.getElementById('namaPimpinan').value || "Pimpinan";
+
     // Header
     doc.text("RUMAH KLINIK GIGI", 105, 10, null, null, "center");
     doc.setFontSize(10);
@@ -110,10 +114,10 @@ $no = 1;
     y += 20;
     const tanggal = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     doc.text("Bukittinggi, " + tanggal, 140, y);
-    y += 10;
+    y += 7;
     doc.text("Pimpinan", 140, y);
     y += 20;
-    doc.text("Pimpinan", 140, y);
+    doc.text(namaPimpinan, 140, y);
 
     // Open the generated PDF in a new window
     window.open(doc.output('bloburl'));

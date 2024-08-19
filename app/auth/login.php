@@ -20,12 +20,18 @@ if (isset($_POST['login'])) {
 
     if (password_verify($password, $row['password'])) {
       $_SESSION['user'] = $row;
+
+      if ($row['level'] === 'admin') {
+        echo '<script>alert("Selamat datang admin");</script>';
+      }
+
       echo '<script>document.location.href="' . $url . '"</script>';
       exit;
     }
   }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">

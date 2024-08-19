@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 28, 2024 at 10:17 AM
+-- Generation Time: Aug 15, 2024 at 01:19 AM
 -- Server version: 8.0.30
 -- PHP Version: 7.4.3
 
@@ -140,15 +140,17 @@ CREATE TABLE `rekam_medis` (
   `deleted_at` datetime DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
-  `deleted_by` int DEFAULT NULL
+  `deleted_by` int DEFAULT NULL,
+  `pembayaran` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rekam_medis`
 --
 
-INSERT INTO `rekam_medis` (`id`, `pasien_id`, `dokter_id`, `ruang_id`, `keluhan`, `diagnosa`, `tanggal`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`) VALUES
-(16, 4, 5, 6, 'Gigi', 'Sakit gigi', '2024-07-28', '2024-07-28 10:16:41', NULL, NULL, 1, NULL, NULL);
+INSERT INTO `rekam_medis` (`id`, `pasien_id`, `dokter_id`, `ruang_id`, `keluhan`, `diagnosa`, `tanggal`, `created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`, `deleted_by`, `pembayaran`) VALUES
+(16, 4, 5, 6, 'Gigi', 'Sakit gigi', '2024-08-14', '2024-07-28 10:16:41', NULL, NULL, 1, NULL, NULL, 0),
+(17, 4, 5, 6, 'TES', 'TES', '2024-08-14', '2024-08-05 18:01:47', NULL, NULL, 1, NULL, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -167,7 +169,8 @@ CREATE TABLE `rm_obat` (
 --
 
 INSERT INTO `rm_obat` (`id`, `obat_id`, `rm_id`) VALUES
-(8, 5, 16);
+(8, 5, 16),
+(9, 5, 17);
 
 -- --------------------------------------------------------
 
@@ -205,6 +208,7 @@ CREATE TABLE `users` (
   `group_id` int NOT NULL,
   `username` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
+  `level` varchar(30) DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -213,8 +217,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `group_id`, `username`, `password`, `last_login`, `created_at`) VALUES
-(1, 1, 'admin', '$2y$10$8DltCLYI6oYQP4UZBo4WruiqSUXxxq1I8Rqs1523kXNi6xTtusKUu', '0000-00-00 00:00:00', '2020-03-03 16:30:35');
+INSERT INTO `users` (`id`, `group_id`, `username`, `password`, `level`, `last_login`, `created_at`) VALUES
+(1, 1, 'admin', '$2y$10$8DltCLYI6oYQP4UZBo4WruiqSUXxxq1I8Rqs1523kXNi6xTtusKUu', 'admin', '0000-00-00 00:00:00', '2020-03-03 16:30:35'),
+(2, 1, 'pemilik', '$2y$10$8DltCLYI6oYQP4UZBo4WruiqSUXxxq1I8Rqs1523kXNi6xTtusKUu', 'pemilik', NULL, '2024-08-14 19:16:51');
 
 --
 -- Indexes for dumped tables
@@ -307,13 +312,13 @@ ALTER TABLE `pasien`
 -- AUTO_INCREMENT for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `rm_obat`
 --
 ALTER TABLE `rm_obat`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ruang`
@@ -325,7 +330,7 @@ ALTER TABLE `ruang`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
