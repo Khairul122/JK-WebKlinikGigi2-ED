@@ -109,7 +109,6 @@ foreach ($rekam_medis as &$rm) {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-// Laporan Harian
 <script>
   document.getElementById('printBtn').addEventListener('click', function() {
     const {
